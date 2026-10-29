@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a192f">
+  <meta name="description" content="사용자에게 가치 있는 서비스를 만드는 소프트웨어 개발자 김민수의 소개 페이지입니다.">
+  <title>김민수 | 소프트웨어 개발자</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #202820;
+      --muted: #667168;
+      --green: #2f6548;
+      --green-dark: #214b35;
+      --lime: #d7ed9b;
+      --paper: #f6f7f3;
+      --white: #fff;
+      --line: #e3e8df;
+      --serif: Georgia, "Noto Serif KR", serif;
+      --sans: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+
+    .site-header {
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      border-bottom: 1px solid rgb(227 232 223 / 80%);
+      background: rgb(246 247 243 / 92%);
+      backdrop-filter: blur(14px);
+    }
+    .nav {
+      display: flex;
+      min-height: 76px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 15px; font-weight: 800; }
+    .brand-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--green);
+      color: white;
+      font-family: var(--serif);
+      font-size: 18px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a { color: var(--muted); font-size: 13px; font-weight: 700; transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--green); }
+    .nav-cta {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: var(--green);
+      color: white !important;
+    }
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: 590px;
+      align-items: center;
+      overflow: hidden;
+      padding: 80px 0 90px;
+    }
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      top: 54px;
+      right: max(calc((100vw - 1120px) / 2 - 20px), 0px);
+      width: clamp(240px, 36vw, 460px);
+      aspect-ratio: 1;
+      border: 1px solid #dfe6d8;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 0 35%, rgb(47 101 72 / 5%) 35.2% 35.6%, transparent 35.8%),
+        radial-gradient(circle at 50% 50%, transparent 0 55%, rgb(47 101 72 / 7%) 55.2% 55.6%, transparent 55.8%),
+        radial-gradient(circle at 50% 50%, #e9f0e2 0 2px, transparent 3px);
+      content: "";
+    }
+    .hero-content { max-width: 720px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 20px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { width: 22px; height: 1px; background: currentColor; content: ""; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 760px;
+      margin-bottom: 22px;
+      font-size: clamp(43px, 7vw, 76px);
+      line-height: 1.18;
+      letter-spacing: -.075em;
+    }
+    h1 em { color: var(--green); font-family: var(--serif); font-weight: 500; }
+    .hero-copy { max-width: 540px; margin-bottom: 30px; color: var(--muted); font-size: 16px; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 20px;
+      border: 1px solid var(--green);
+      border-radius: 999px;
+      background: var(--green);
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: var(--green-dark); }
+    .button.secondary { background: transparent; color: var(--green); }
+    .button.secondary:hover { background: #eaf0e7; }
+    .hero-note { margin: 22px 0 0; color: #849087; font-size: 12px; }
+
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 20px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .fact { padding: 22px 24px 22px 0; }
+    .fact + .fact { padding-left: 24px; border-left: 1px solid var(--line); }
+    .fact strong { display: block; margin-bottom: 2px; color: var(--green); font-family: var(--serif); font-size: 27px; font-weight: 500; }
+    .fact span { color: var(--muted); font-size: 12px; }
+
+    section { padding: 100px 0; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 38px; }
+    .section-heading .eyebrow { margin-bottom: 12px; }
+    h2 { margin-bottom: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.25; letter-spacing: -.06em; }
+    .section-intro { max-width: 410px; margin-bottom: 2px; color: var(--muted); font-size: 14px; }
+    .story { background: var(--white); }
+    .story-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: start; }
+    .quote-card {
+      position: sticky;
+      top: 112px;
+      padding: 34px;
+      border-radius: 22px;
+      background: var(--green);
+      color: white;
+    }
+    .quote-mark { display: block; margin-bottom: 22px; color: var(--lime); font-family: var(--serif); font-size: 52px; line-height: .8; }
+    .quote-card blockquote { margin: 0 0 22px; font-size: clamp(25px, 3vw, 34px); font-weight: 700; line-height: 1.45; letter-spacing: -.05em; }
+    .quote-card p { margin: 0; color: rgb(255 255 255 / 72%); font-size: 13px; }
+    .story-copy p { margin-bottom: 18px; color: var(--muted); font-size: 15px; }
+    .story-copy p strong { color: var(--ink); }
+    .values { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 25px; }
+    .chip { padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--green); font-size: 12px; font-weight: 700; }
+
+    .experience { background: var(--paper); }
+    .experience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .experience-card {
+      min-height: 245px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--white);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .experience-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgb(34 57 39 / 7%); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 24px; }
+    .card-icon { display: grid; width: 44px; height: 44px; place-items: center; border-radius: 14px; background: #edf3e8; font-size: 20px; }
+    .card-label { color: #78847b; font-size: 11px; font-weight: 800; letter-spacing: 1px; }
+    .experience-card h3 { margin-bottom: 9px; font-size: 20px; letter-spacing: -.04em; }
+    .experience-card p { margin-bottom: 0; color: var(--muted); font-size: 13px; }
+    .award { color: var(--green); font-weight: 800; }
+
+    .strengths { background: #edf1e9; }
+    .strength-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .strength-card { padding: 23px 20px; border-radius: 16px; background: rgb(255 255 255 / 78%); }
+    .strength-number { display: block; margin-bottom: 27px; color: #8ca18d; font-family: var(--serif); font-size: 14px; }
+    .strength-card h3 { margin-bottom: 8px; font-size: 16px; letter-spacing: -.03em; }
+    .strength-card p { margin-bottom: 0; color: var(--muted); font-size: 12px; }
+    .growth-note { display: flex; gap: 16px; align-items: flex-start; margin-top: 17px; padding: 20px 22px; border: 1px solid #dbe3d7; border-radius: 16px; }
+    .growth-note strong { flex: 0 0 auto; color: var(--green); font-size: 13px; }
+    .growth-note p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .roadmap { background: var(--white); }
+    .roadmap-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 42px; }
+    .roadmap-item { position: relative; padding: 28px 25px 0 0; border-top: 1px solid #cbd6c8; }
+    .roadmap-item::before { position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--green); content: ""; }
+    .roadmap-item + .roadmap-item { padding-left: 25px; border-left: 1px solid var(--line); }
+    .roadmap-item span { display: block; margin-bottom: 12px; color: var(--green); font-size: 11px; font-weight: 800; letter-spacing: 1px; }
+    .roadmap-item h3 { margin-bottom: 8px; font-size: 18px; }
+    .roadmap-item p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .closing { padding: 72px 0 78px; background: var(--green-dark); color: white; }
+    .closing-inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .closing .eyebrow { color: var(--lime); }
+    .closing h2 { max-width: 660px; font-size: clamp(30px, 4.5vw, 48px); }
+    .closing p { max-width: 540px; margin: 15px 0 0; color: rgb(255 255 255 / 73%); font-size: 14px; }
+    .closing .button { flex: 0 0 auto; border-color: var(--lime); background: var(--lime); color: var(--green-dark); }
+    .closing .button:hover { background: #e4f5b5; }
+    footer { padding: 24px 0; background: #193b2a; color: rgb(255 255 255 / 62%); font-size: 11px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 15px; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    :focus-visible { outline: 3px solid #8dbf80; outline-offset: 4px; }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 36px, 560px); }
+      .nav { min-height: 66px; }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 1px);
+        right: 0;
+        left: 0;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 10px 18px 18px;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 12px 8px; }
+      .nav-links .nav-cta { margin-top: 7px; text-align: center; }
+      .hero { min-height: 560px; padding: 68px 0 66px; }
+      .hero::after { top: 30px; right: -120px; width: 300px; opacity: .7; }
+      .hero-copy { font-size: 14px; }
+      .quick-facts { margin-top: 42px; }
+      .fact { padding: 17px 10px 17px 0; }
+      .fact + .fact { padding-left: 12px; }
+      .fact strong { font-size: 23px; }
+      .fact span { font-size: 10px; }
+      section { padding: 72px 0; }
+      .section-heading { display: block; margin-bottom: 27px; }
+      .section-intro { margin-top: 15px; }
+      .story-grid { grid-template-columns: 1fr; gap: 28px; }
+      .quote-card { position: static; padding: 27px; }
+      .experience-grid { grid-template-columns: 1fr; }
+      .experience-card { min-height: auto; }
+      .strength-grid { grid-template-columns: 1fr 1fr; }
+      .growth-note { display: block; }
+      .growth-note p { margin-top: 7px; }
+      .roadmap-list { grid-template-columns: 1fr; gap: 0; margin-top: 28px; }
+      .roadmap-item, .roadmap-item + .roadmap-item { padding: 20px 0 23px 22px; border-top: 0; border-left: 1px solid #cbd6c8; }
+      .roadmap-item::before { top: 25px; left: -5px; }
+      .closing-inner { display: block; }
+      .closing .button { margin-top: 25px; }
+    }
+    @media (max-width: 420px) {
+      .wrap { width: min(100% - 30px, 560px); }
+      h1 { font-size: 42px; }
+      .quick-facts { grid-template-columns: 1fr; }
+      .fact, .fact + .fact { padding: 12px 0; border-left: 0; }
+      .fact + .fact { border-top: 1px solid var(--line); }
+      .fact strong { display: inline-block; min-width: 100px; }
+      .strength-grid { grid-template-columns: 1fr; }
+      .strength-number { margin-bottom: 14px; }
+      .footer-inner { flex-direction: column; gap: 5px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #dce7f5;
+      --muted: #91a3bd;
+      --green: #64ffda;
+      --green-dark: #64ffda;
+      --lime: #64ffda;
+      --paper: #0a192f;
+      --white: #112240;
+      --line: #233554;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    html { scroll-padding-top: 40px; }
+    body {
+      background:
+        radial-gradient(ellipse at 12% 18%, rgb(31 65 105 / 18%), transparent 42%),
+        var(--paper);
+      color: var(--ink);
+    }
+    body::before {
+      position: fixed;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      width: var(--scroll-progress, 0%);
+      height: 2px;
+      background: var(--green);
+      content: "";
+      transition: width .1s linear;
+    }
+    .wrap { width: 100%; max-width: none; margin: 0; }
+    .site-header {
+      position: fixed;
+      z-index: 10;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: min(42%, 600px);
+      border: 0;
+      background: transparent;
+      backdrop-filter: none;
+    }
+    .nav {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 32px;
+      padding: clamp(44px, 8vh, 90px) clamp(28px, 7vw, 110px) 46px clamp(30px, 10vw, 150px);
+    }
+    .brand { display: block; font-size: 52px; font-weight: 750; letter-spacing: -.07em; }
+    .brand-mark { display: none; }
+    .brand > span:last-child { display: block; }
+    .brand > span:last-child > span {
+      display: block;
+      margin-top: 5px;
+      color: var(--ink) !important;
+      font-size: 21px;
+      font-weight: 600 !important;
+      letter-spacing: -.045em;
+    }
+    .sidebar-intro { max-width: 300px; margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .sidebar-top { width: 100%; }
+    .sidebar-kicker { margin: 0; color: var(--green); font-family: var(--mono); font-size: 12px; }
+    .nav-links { width: 100%; flex-direction: column; align-items: flex-start; gap: 0; }
+    .nav-links a {
+      position: relative;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 0;
+      color: #7889a3;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      transition: color .2s ease;
+    }
+    .nav-links a:not(.nav-cta)::before {
+      width: 32px;
+      height: 1px;
+      background: #53647d;
+      content: "";
+      transition: width .2s ease, background .2s ease;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible, .nav-links a.is-active { color: var(--green); }
+    .nav-links a:hover::before, .nav-links a.is-active::before { width: 58px; background: var(--green); }
+    .nav-links .nav-cta {
+      width: auto;
+      margin-top: 14px;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--muted) !important;
+      font-size: 10px;
+    }
+    .nav-links .nav-cta::before { display: none; }
+    .menu-toggle { display: none; }
+    main { width: min(100% - min(42%, 600px), 900px); margin-left: min(42%, 600px); padding: 0 clamp(32px, 7vw, 110px) 0 0; }
+    section { padding: 85px 0; scroll-margin-top: 30px; }
+    .hero { min-height: 100vh; padding: 120px 0 86px; }
+    .hero::after { display: none; }
+    .hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 145px; align-items: center; column-gap: 18px; }
+    .hero-content { max-width: 620px; }
+    .profile-portrait {
+      grid-column: 2;
+      grid-row: 1;
+      width: 136px;
+      aspect-ratio: 1;
+      justify-self: end;
+      margin: 0 0 25px;
+      padding: 7px;
+      border: 1px solid rgb(100 255 218 / 55%);
+      border-radius: 48% 48% 44% 44%;
+      background: rgb(100 255 218 / 8%);
+      box-shadow: 0 0 0 9px rgb(100 255 218 / 4%), 0 18px 50px rgb(0 0 0 / 20%);
+      transform: rotate(3deg);
+    }
+    .profile-portrait img { display: block; width: 100%; height: 100%; border-radius: inherit; background: #f4f4f2; object-fit: cover; }
+    .eyebrow { gap: 0; margin-bottom: 18px; color: var(--green); font-family: var(--mono); font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; }
+    .eyebrow::before { display: none; }
+    h1 { margin-bottom: 22px; color: #e6f1ff; font-size: clamp(38px, 4vw, 58px); line-height: 1.13; letter-spacing: -.065em; }
+    h1 em { color: var(--muted); font-family: var(--sans); font-weight: 650; }
+    .hero-copy { max-width: 490px; margin-bottom: 0; color: #91a3bd; font-size: 15px; line-height: 1.8; }
+    .hero-actions { display: none; }
+    .hero-note { margin-top: 22px; color: #71839d; font-family: var(--mono); font-size: 11px; }
+    .quick-facts { grid-column: 1 / -1; grid-row: 2; grid-template-columns: repeat(3, 1fr); margin-top: 38px; border-color: #233554; }
+    .fact { padding: 18px 12px 18px 0; }
+    .fact + .fact { padding-left: 14px; border-color: #233554; }
+    .fact strong { color: var(--green); font-family: var(--mono); font-size: 20px; font-weight: 500; }
+    .fact span { color: #91a3bd; font-size: 10px; }
+    .section-heading { display: block; margin-bottom: 28px; }
+    .section-heading .eyebrow { margin-bottom: 10px; }
+    h2 { color: #dce7f5; font-size: clamp(27px, 3vw, 36px); letter-spacing: -.055em; }
+    .section-intro { max-width: 520px; margin-top: 12px; color: #91a3bd; font-size: 14px; }
+    .story, .experience, .strengths, .roadmap { background: transparent; }
+    .story-grid { grid-template-columns: 1fr; gap: 22px; }
+    .quote-card { position: static; padding: 22px 24px; border: 1px solid #233554; border-left: 2px solid var(--green); border-radius: 4px; background: #0d1d35; }
+    .quote-mark { margin-bottom: 12px; color: var(--green); font-size: 36px; }
+    .quote-card blockquote { max-width: 590px; margin-bottom: 12px; color: #dce7f5; font-size: clamp(20px, 2.4vw, 28px); }
+    .quote-card p, .story-copy p { color: #91a3bd; }
+    .story-copy p { margin-bottom: 14px; font-size: 14px; }
+    .story-copy p strong { color: #dce7f5; }
+    .chip { padding: 5px 10px; border-color: #233554; border-radius: 3px; color: var(--green); font-family: var(--mono); font-size: 10px; }
+    .experience-grid { grid-template-columns: 1fr; gap: 2px; }
+    .experience-card {
+      min-height: 0;
+      padding: 22px 20px;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .experience-card:hover { background: rgb(17 34 64 / 68%); box-shadow: none; }
+    .card-top { margin-bottom: 13px; }
+    .card-icon { width: 30px; height: 30px; border: 1px solid #233554; border-radius: 4px; background: #112240; font-size: 14px; }
+    .card-label { color: var(--green); font-family: var(--mono); font-size: 10px; font-weight: 400; letter-spacing: .5px; }
+    .experience-card h3 { margin-bottom: 8px; color: #dce7f5; font-size: 17px; }
+    .experience-card p { color: #91a3bd; font-size: 13px; line-height: 1.75; }
+    .award { color: var(--green); }
+    .strength-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .strength-card { padding: 18px; border: 1px solid #233554; border-radius: 4px; background: #0d1d35; }
+    .strength-number { margin-bottom: 15px; color: var(--green); font-family: var(--mono); font-size: 10px; }
+    .strength-card h3 { color: #dce7f5; font-size: 14px; }
+    .strength-card p, .growth-note p { color: #91a3bd; font-size: 12px; }
+    .growth-note { gap: 10px; margin-top: 12px; padding: 15px 17px; border-color: #233554; border-radius: 4px; }
+    .growth-note strong { color: var(--green); font-family: var(--mono); font-size: 11px; }
+    .roadmap-list { grid-template-columns: 1fr; gap: 0; margin-top: 22px; padding-left: 14px; border-left: 1px solid #233554; }
+    .roadmap-item, .roadmap-item + .roadmap-item { padding: 0 0 25px 22px; border: 0; }
+    .roadmap-item:last-child { padding-bottom: 0; }
+    .roadmap-item::before { top: 5px; left: -18px; width: 7px; height: 7px; border: 1px solid var(--green); background: var(--paper); }
+    .roadmap-item span { margin-bottom: 8px; color: var(--green); font-family: var(--mono); font-size: 10px; }
+    .roadmap-item h3 { color: #dce7f5; font-size: 16px; }
+    .roadmap-item p { color: #91a3bd; font-size: 13px; }
+    .closing { padding: 58px 0; border-top: 1px solid #233554; background: transparent; }
+    .closing-inner { display: block; }
+    .closing h2 { font-size: clamp(25px, 3vw, 34px); }
+    .closing p { color: #91a3bd; font-size: 13px; }
+    .closing .button { margin-top: 16px; border: 1px solid var(--green); border-radius: 4px; background: transparent; color: var(--green); }
+    .closing .button:hover { background: rgb(100 255 218 / 8%); }
+    footer { padding: 20px 0 36px; background: transparent; color: #71839d; font-family: var(--mono); font-size: 10px; }
+    .footer-inner { flex-direction: column; gap: 5px; }
+    .reveal { opacity: 1; transform: none; }
+    .experience-card:focus-within, .experience-card:focus-visible { background: #112240; }
+    :focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+
+    @media (max-width: 850px) {
+      html { scroll-padding-top: 82px; }
+      .site-header { right: 0; bottom: auto; width: 100%; height: auto; border-bottom: 1px solid #233554; background: rgb(10 25 47 / 94%); backdrop-filter: blur(12px); }
+      .nav { position: relative; height: auto; min-height: 70px; flex-direction: row; align-items: center; gap: 15px; padding: 10px 24px; }
+      .sidebar-top { width: auto; }
+      .brand { font-size: 25px; }
+      .brand > span:last-child > span { margin-top: 0; font-size: 12px; }
+      .sidebar-intro, .sidebar-kicker { display: none; }
+      .menu-toggle { display: grid; flex: 0 0 auto; place-items: center; width: 40px; height: 40px; border: 1px solid #233554; border-radius: 4px; background: #112240; color: var(--green); }
+      .nav-links { position: absolute; top: 100%; right: 0; left: 0; display: none; gap: 0; padding: 10px 24px 18px; border-bottom: 1px solid #233554; background: #0a192f; }
+      .nav-links.is-open { display: flex; }
+      .nav-links a { padding: 11px 0; }
+      .nav-links .nav-cta { margin-top: 8px; }
+      main { width: auto; margin: 0; padding: 70px 24px 0; }
+      section { padding: 70px 0; scroll-margin-top: 72px; }
+      .hero { min-height: 660px; padding: 110px 0 64px; }
+      .hero::after { display: none; }
+      .hero .wrap { grid-template-columns: minmax(0, 1fr) 112px; column-gap: 12px; }
+      .profile-portrait { width: 104px; }
+      .quick-facts { margin-top: 34px; }
+      .closing-inner { display: block; }
+    }
+    @media (max-width: 520px) {
+      .nav { padding-inline: 18px; }
+      .nav-links { padding-inline: 18px; }
+      main { padding-inline: 20px; }
+      .hero { min-height: min(740px, calc(100svh - 70px)); padding-top: 92px; }
+      .hero .wrap { grid-template-columns: minmax(0, 1fr) 76px; column-gap: 7px; }
+      .profile-portrait { width: 72px; padding: 4px; }
+      h1 { font-size: clamp(30px, 8.5vw, 42px); }
+      .hero-copy { font-size: 14px; }
+      .quick-facts { grid-template-columns: 1fr; margin-top: 25px; }
+      .fact, .fact + .fact { display: flex; align-items: baseline; gap: 12px; padding: 10px 0; border-left: 0; }
+      .fact + .fact { border-top: 1px solid #233554; }
+      .fact strong { min-width: 84px; margin: 0; font-size: 16px; }
+      .fact span { font-size: 11px; }
+      .strength-grid { grid-template-columns: 1fr; }
+      .growth-note { display: block; }
+      .growth-note p { margin: 7px 0 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav wrap" aria-label="주요 메뉴">
+      <div class="sidebar-top">
+        <p class="sidebar-kicker">안녕하세요, 저는</p>
+        <a class="brand" href="#home" aria-label="김민수 소개 페이지 처음으로">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span>김민수 <span>/ Developer</span></span>
+        </a>
+        <p class="sidebar-intro">사용자의 경험을 고민하고,<br>작은 문제를 가치 있는 서비스로<br>바꾸는 소프트웨어 개발자입니다.</p>
+      </div>
+      <button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-links">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="#about"><span>01</span> About</a>
+        <a href="#experience"><span>02</span> Experience</a>
+        <a href="#strengths"><span>03</span> Strengths</a>
+        <a href="#vision"><span>04</span> Vision</a>
+        <a class="nav-cta" href="#contact">함께 이야기하기 <span aria-hidden="true">↗</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap">
+        <div class="hero-content reveal">
+          <p class="eyebrow">Software developer · Kim Min-su</p>
+          <h1>사람을 생각하고,<br><em>가치를 만드는</em> 개발자</h1>
+          <p class="hero-copy">안녕하세요. 사용자의 경험을 더 나은 방향으로 바꾸는 기술적 해답을 고민하는 소프트웨어 개발자 김민수입니다.</p>
+          <div class="hero-actions">
+            <a class="button" href="#about">저를 소개합니다 <span aria-hidden="true">↓</span></a>
+            <a class="button secondary" href="#experience">주요 경험 보기</a>
+          </div>
+          <p class="hero-note">컴퓨터공학 전공 · 웹 개발 2년 · 해커톤 우수상</p>
+        </div>
+        <figure class="profile-portrait reveal">
+          <img src="kim-minsu-profile.png" alt="김민수의 프로필 이미지">
+        </figure>
+        <div class="quick-facts reveal" aria-label="주요 이력">
+          <div class="fact"><strong>2년</strong><span>스타트업 웹 개발 경험</span></div>
+          <div class="fact"><strong>48시간</strong><span>팀과 함께 완성한 해커톤</span></div>
+          <div class="fact"><strong>5명</strong><span>함께 목표를 이룬 팀원</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="story" id="about">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <div><p class="eyebrow">My perspective</p><h2>기술은 사람을<br>위해 존재합니다.</h2></div>
+          <p class="section-intro">기술 그 자체보다, 그 기술이 사람들의 일상을 어떻게 바꾸는지에 더 관심이 있습니다.</p>
+        </div>
+        <div class="story-grid">
+          <aside class="quote-card reveal">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>사용자에게 도움이 되는 순간, 기술은 비로소 의미를 가집니다.</blockquote>
+            <p>제가 문제를 바라보고 해결책을 선택하는 기준입니다.</p>
+          </aside>
+          <div class="story-copy reveal">
+            <p>컴퓨터공학을 전공하며 프로그래밍의 기초를 다졌고, 졸업 후 <strong>스타트업에서 2년간 웹 개발</strong>을 맡았습니다. 빠르게 변하는 환경 속에서 새 기술을 배우고 실제 서비스에 적용하는 과정은 늘 큰 동기부여가 됩니다.</p>
+            <p>특히 사용자 경험을 개선할 수 있는 방법을 고민하고, 아이디어를 동료들과 구체적인 결과물로 만들어가는 일을 좋아합니다. 개발자와 디자이너, 기획자가 서로의 관점을 나누며 공동의 목표를 이루는 협업을 중요하게 생각합니다.</p>
+            <p>앞으로도 기술의 가능성을 탐구하는 동시에 사용자의 목소리를 놓치지 않고, 더 편리하고 효율적인 서비스를 만드는 개발자로 성장하겠습니다.</p>
+            <div class="values" aria-label="핵심 가치">
+              <span class="chip">사용자 중심</span><span class="chip">꾸준한 학습</span><span class="chip">열린 협업</span><span class="chip">문제 해결</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience" id="experience">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <div><p class="eyebrow">Selected experience</p><h2>함께 만들고,<br>함께 성장했습니다.</h2></div>
+          <p class="section-intro">팀의 목표를 구체적인 결과로 연결하며 개발자로서의 시야와 협업 역량을 키웠습니다.</p>
+        </div>
+        <div class="experience-grid">
+          <article class="experience-card reveal">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">🏆</span><span class="card-label">HACKATHON · UNIVERSITY</span></div>
+            <h3>지역 상권 활성화 앱</h3>
+            <p><span class="award">교내 해커톤 우수상</span> · 대학교 3학년 때 팀장으로 5명의 팀원과 48시간 동안 React Native 앱을 완성했습니다.</p>
+          </article>
+          <article class="experience-card reveal">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">🧩</span><span class="card-label">FULL-STACK COLLABORATION</span></div>
+            <h3>기획부터 구현까지</h3>
+            <p>백엔드 API 설계부터 프론트엔드 구현까지 전 과정에 참여했습니다. 팀원의 역량에 맞춰 업무를 나누고 함께 결과를 만들어냈습니다.</p>
+          </article>
+          <article class="experience-card reveal">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">🌱</span><span class="card-label">MENTORING · 4 YEARS</span></div>
+            <h3>배우고 나누는 개발 문화</h3>
+            <p>컴퓨터공학과 학회에서 후배들에게 프로그래밍을 가르쳤습니다. 어려운 개념을 쉽게 설명하는 힘을 길러 코드 리뷰와 기술 공유에 활용하고 있습니다.</p>
+          </article>
+          <article class="experience-card reveal">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">💻</span><span class="card-label">STARTUP · 2 YEARS</span></div>
+            <h3>실무에서 쌓은 웹 개발</h3>
+            <p>스타트업에서 웹 개발 업무를 맡으며 빠르게 변화하는 환경에서 새로운 기술을 익히고, 사용자 경험을 높이는 방법을 고민해왔습니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="strengths" id="strengths">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <div><p class="eyebrow">How I work</p><h2>꾸준히 배우고,<br>끝까지 해결합니다.</h2></div>
+          <p class="section-intro">좋은 결과는 개인의 기술뿐 아니라 우선순위를 세우고, 서로의 강점을 연결하는 과정에서 나온다고 믿습니다.</p>
+        </div>
+        <div class="strength-grid">
+          <article class="strength-card reveal"><span class="strength-number">01 / LEARN</span><h3>꾸준한 학습</h3><p>온라인 강의와 사이드 프로젝트로 새 기술을 배우고 직접 적용합니다.</p></article>
+          <article class="strength-card reveal"><span class="strength-number">02 / CONNECT</span><h3>협업과 소통</h3><p>다양한 직군의 관점을 존중하며 공동의 목표를 향해 소통합니다.</p></article>
+          <article class="strength-card reveal"><span class="strength-number">03 / SOLVE</span><h3>문제 해결</h3><p>복잡한 이슈 앞에서도 여러 접근을 시도해 원인을 찾고 해결합니다.</p></article>
+          <article class="strength-card reveal"><span class="strength-number">04 / IMPROVE</span><h3>균형 있는 완성도</h3><p>완벽주의가 일정에 영향을 주지 않도록 우선순위와 적정 수준을 의식합니다.</p></article>
+        </div>
+        <div class="growth-note reveal"><strong>계속 성장하는 중</strong><p>높은 완성도를 추구하는 강점은 살리되, 중요한 일부터 차근차근 마무리하며 속도와 품질의 균형을 맞추고 있습니다.</p></div>
+      </div>
+    </section>
+
+    <section class="roadmap" id="vision">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <div><p class="eyebrow">Looking ahead</p><h2>배우고 기여하며,<br>더 큰 가치를 만듭니다.</h2></div>
+          <p class="section-intro">팀과 함께 성장하며 서비스의 안정성과 확장성, 그리고 사용자에게 전달되는 가치를 높이겠습니다.</p>
+        </div>
+        <div class="roadmap-list">
+          <article class="roadmap-item reveal"><span>FIRST · ADAPT</span><h3>팀에 빠르게 적응하기</h3><p>개발 문화와 코딩 컨벤션을 익히고, 비즈니스 도메인을 이해해 맡은 업무를 책임감 있게 수행하겠습니다.</p></article>
+          <article class="roadmap-item reveal"><span>NEXT · CONTRIBUTE</span><h3>함께 더 나은 방법 찾기</h3><p>동료와 협업하며 개발 역량을 높이고, 새로운 기술과 프로세스 개선으로 서비스에 기여하겠습니다.</p></article>
+          <article class="roadmap-item reveal"><span>FUTURE · LEAD</span><h3>성장을 나누는 리더 되기</h3><p>클라우드와 마이크로서비스 전문성을 쌓고 주니어를 멘토링하며, 확장 가능하고 안정적인 서비스 개발을 이끌겠습니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing" id="contact">
+      <div class="wrap closing-inner reveal">
+        <div>
+          <p class="eyebrow">Let's build something meaningful</p>
+          <h2>사용자에게 진정한 가치를 전하는 일,<br>함께 만들어가고 싶습니다.</h2>
+          <p>좋은 동료들과 배우고 도전하며 더 나은 서비스를 만드는 개발자로 성장하겠습니다.</p>
+        </div>
+        <a class="button" href="#home">처음으로 돌아가기 <span aria-hidden="true">↑</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>김민수 · 소프트웨어 개발자</span>
+      <span>기술은 사람을 위해 존재한다.</span>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "메뉴 열기" : "메뉴 닫기");
+      navLinks.classList.toggle("is-open", !isOpen);
+    });
+
+    navLinks.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "메뉴 열기");
+        navLinks.classList.remove("is-open");
+      }
+    });
+
+    const sectionLinks = [...navLinks.querySelectorAll('a[href^="#"]')];
+    const sections = [...document.querySelectorAll("main section[id]")];
+    const updateScrollProgress = () => {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+      document.documentElement.style.setProperty("--scroll-progress", `${progress}%`);
+    };
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    updateScrollProgress();
+
+    if ("IntersectionObserver" in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            sectionLinks.forEach((link) => {
+              const isActive = link.getAttribute("href") === `#${entry.target.id}`;
+              link.classList.toggle("is-active", isActive);
+              if (isActive) link.setAttribute("aria-current", "location");
+              else link.removeAttribute("aria-current");
+            });
+          }
+        });
+      }, { rootMargin: "-30% 0px -55% 0px" });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    const revealItems = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            currentObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealItems.forEach((item) => observer.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+  </script>
+</body>
+</html>
